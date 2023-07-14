@@ -1,0 +1,105 @@
+.account {
+  position: absolute;
+  padding: 1rem 0.5rem;
+  box-shadow: #151c25;
+  font-size: 1rem;
+  width: 18rem;
+  border-radius: 1rem;
+  right: -20px;
+  top: 3.5rem;
+  z-index: 22222222222;
+  background-color: #151c25;
+}
+
+.account-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.account-img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.account-info {
+  line-height: 0.3;
+  padding-top: 15px;
+  color: #fff;
+}
+
+.account-info p {
+  font-weight: 600;
+}
+
+.account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.3rem 1.5rem;
+  transition: all 0.3s ease-in;
+}
+
+.account-menu-item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.account-menu-item:hover {
+  color: #e18715;
+}
+
+.account-menu-item a:hover {
+  color: #e18715;
+}
+
+.navbar-container-account-box {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar-container-account {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 867px) {
+  .connect-btn {
+    margin-left: 10px;
+  }
+
+  .navbar-container-account-box {
+    padding-left: 10px;
+  }
+
+  .account {
+    position: absolute;
+    box-shadow: #151c25;
+    font-size: 12px;
+    width: 200px;
+    border-radius: 1rem;
+    right: 25px;
+    z-index: 22222222222;
+    background-color: #151c25;
+  }
+
+  .account-box {
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  .account-info {
+    line-height: 0.3;
+    padding-top: 10px;
+  }
+
+  .account-img {
+    width: 40px;
+    height: 40px;
+  }
+  .account-menu-item {
+    gap: 1.6rem;
+  }
+}
