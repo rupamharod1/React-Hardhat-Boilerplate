@@ -29,6 +29,7 @@ const Home = () => {
 
     async function getGreeting() {
         if (data.network === networksMap[networkDeployedTo]) {
+            const chainId = await ethereum.request({ method: 'eth_chainId'});
             const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
             const greeter = new ethers.Contract(chainId == "0x2126E" ? contractAddress: testContractAddress, Greeter.abi, provider);
             const currentGreeting = await greeter.greet()
