@@ -28,11 +28,19 @@ const Home = () => {
     const [newGreeting, setNewGreeting] = useState("")
 
     async function getGreeting() {
-        if (data.network === networksMap[networkDeployedTo]) {
+        if (data.network === networksMap[networkDeployedTo] || data.network === networksMap[testNetworkDeployedTo]) {
+            console.log("hello");
             const chainId = await ethereum.request({ method: 'eth_chainId'});
+            console.log("chain id is",chainId);
+
             const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-            const greeter = new ethers.Contract(chainId == "0x2126E" ? contractAddress: testContractAddress, Greeter.abi, provider);
+            console.log(provider);
+
+            const greeter = new ethers.Contract(chainId == "0x2126e" ? contractAddress: testContractAddress, Greeter.abi, provider);
+            console.log(greeter);
+
             const currentGreeting = await greeter.greet()
+            console.log(currentGreeting);
 
             if (currentGreeting !== undefined) {
                 setGreeting(currentGreeting)
@@ -45,17 +53,14 @@ const Home = () => {
             try {
                 setLoading(true)
                 const chainId = await ethereum.request({ method: 'eth_chainId'});
-                console.log(chainId)
                 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-                console.log(provider)
                 const signer = provider.getSigner()
-                const greeter = new ethers.Contract(chainId == "0x2126E" ? contractAddress: testContractAddress, Greeter.abi, signer);
+                const greeter = new ethers.Contract(chainId == "0x2126e" ? contractAddress: testContractAddress, Greeter.abi, signer);
                 const set_tx = await greeter.setGreeting(newGreeting)
                 await set_tx.wait()
-
-                setNewGreeting("")
-                setLoading(false)
                 getGreeting()
+                setLoading(false)
+                
 
             } catch (err) {
                 console.log(err)
