@@ -17,6 +17,7 @@ const buttonStyle = {
     borderRadius: "5px",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
     cursor: "pointer",
+    marginBottom: "10px",
   };
 
 const Home = () => {
@@ -29,19 +30,10 @@ const Home = () => {
 
     async function getGreeting() {
         if (data.network === networksMap[networkDeployedTo] || data.network === networksMap[testNetworkDeployedTo]) {
-            console.log("hello");
             const chainId = await ethereum.request({ method: 'eth_chainId'});
-            console.log("chain id is",chainId);
-
             const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-            console.log(provider);
-
             const greeter = new ethers.Contract(chainId == "0x2126e" ? contractAddress: testContractAddress, Greeter.abi, provider);
-            console.log(greeter);
-
             const currentGreeting = await greeter.greet()
-            console.log(currentGreeting);
-
             if (currentGreeting !== undefined) {
                 setGreeting(currentGreeting)
             }
@@ -69,7 +61,7 @@ const Home = () => {
         }
     }
 
-    async function changeNetwork() {
+    async function testNetwork() {
         try {
           await ethereum.request({
             method: 'wallet_switchEthereumChain',
@@ -79,6 +71,17 @@ const Home = () => {
             console.log("Network dosen't exist in metamask")
         }
     }
+
+    async function mainNetwork() {
+      try {
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x2126E' }],
+        });
+      } catch (switchError) {
+          console.log("Network dosen't exist in metamask")
+      }
+  }
 
     useEffect(() => {
         if (window.ethereum !== undefined) {
@@ -112,7 +115,13 @@ const Home = () => {
                 </>
               ) : (
                 <div className="home-container-text">
-                  <button style={buttonStyle} variant="contained" color="primary" onClick={changeNetwork}>Switch Network</button>
+                  <button style={buttonStyle} variant="contained" color="primary" onClick={testNetwork}>
+                    Switch to Test Network
+                  </button>
+                  <br /> {/* Add a line break to create space */}
+                  <button style={buttonStyle} variant="contained" color="primary" onClick={mainNetwork}>
+                    Switch to Main Network
+                  </button>
                 </div>
               )
             ) : null}
