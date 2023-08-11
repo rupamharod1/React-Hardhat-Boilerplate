@@ -10,15 +10,15 @@ import Greeter from "../artifacts/Greeter.sol/Greeter.json";
 import { contractAddress, networkDeployedTo, testContractAddress , testNetworkDeployedTo} from "../utils/contracts-config";
 import networksMap from "../utils/networksMap.json";
 
-const buttonStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    padding: "2px 4px",
-    borderRadius: "5px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-    cursor: "pointer",
-    marginBottom: "10px",
-  };
+// const buttonStyle = {
+//     backgroundColor: "blue",
+//     color: "white",
+//     padding: "2px 4px",
+//     borderRadius: "5px",
+//     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+//     cursor: "pointer",
+//     marginBottom: "10px",
+//   };
 
 const Home = () => {
 
@@ -79,7 +79,31 @@ const Home = () => {
           params: [{ chainId: '0x2126E' }],
         });
       } catch (switchError) {
-          console.log("Network dosen't exist in metamask")
+        console.log("Network doesn't exist.. Adding this network to metamask")
+        await window.ethereum.request({
+          "method": "wallet_addEthereumChain",
+          "params": [
+            {
+              "blockExplorerUrls": [
+                "https://143.110.190.194:4000/"
+              ],
+              "iconUrls": [
+                null,
+                null
+              ],
+              "rpcUrls": [
+                "https://gopalgurram.xyz/"
+              ],
+              "chainId": "0x2126E",
+              "chainName": "Pixel Chain",
+              "nativeCurrency": {
+                "name": "PIXEL",
+                "symbol": "PIXEL",
+                "decimals": 18
+              }
+            }
+          ]
+        });
       }
   }
 
@@ -103,7 +127,7 @@ const Home = () => {
                   <div className="col-md-4 center" style={{ display: "inline-block" }}>
                     <div >
                       <Form.Control
-                        type="text"
+                        type ="text"
                         placeholder="Enter the new greeting"
                         onChange={e => setNewGreeting(e.target.value)} />
                     </div>
@@ -114,12 +138,12 @@ const Home = () => {
                   </div>
                 </>
               ) : (
-                <div className="home-container-text">
-                  <button style={buttonStyle} variant="contained" color="primary" onClick={testNetwork}>
+                <div className="home-container-text" style={{ color: "white"}}>
+                  <button style={{marginBottom: "10px" , font: "small-caption", padding: "5px 10px"}} variant="warning" color="inherit" onClick={testNetwork}>
                     Switch to Test Network
                   </button>
                   <br /> {/* Add a line break to create space */}
-                  <button style={buttonStyle} variant="contained" color="primary" onClick={mainNetwork}>
+                  <button style={{marginBottom: "10px" , font: "small-caption", padding: "5px 10px"}} variant="warning" color="inherit" onClick={mainNetwork}>
                     Switch to Main Network
                   </button>
                 </div>
